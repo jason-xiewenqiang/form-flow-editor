@@ -105,14 +105,14 @@
             </tr>
             <tr>
                 <td colspan="7" style="height: 45px;font-weight: 800;">交班值班员(签名)</td>
-                <td colspan="7" style="height: 45px;"></td>
-                <td colspan="6" style="height: 45px;font-weight: 800;">接班值班员(签名)</td>
+                <td colspan="6" style="height: 45px;"></td>
+                <td colspan="7" style="height: 45px;font-weight: 800;">接班值班员(签名)</td>
                 <td colspan="8" style="height: 45px;"></td>
             </tr>
             <tr>
                 <td colspan="7" style="height: 45px;font-weight: 800;">交班值班班长(签名)</td>
-                <td colspan="7" style="height: 45px;"></td>
-                <td colspan="6" style="height: 45px;font-weight: 800;">接班值班班长(签名)</td>
+                <td colspan="6" style="height: 45px;"></td>
+                <td colspan="7" style="height: 45px;font-weight: 800;">接班值班班长(签名)</td>
                 <td colspan="8" style="height: 45px;"></td>
             </tr>
             <tr>
@@ -126,14 +126,57 @@
             </tr>
         </tbody>
     </table>
+    <el-button @click="print" v-show="show">打印</el-button>
+    <el-button @click="downloadExcel" v-show="show">下载</el-button>
   </div>
 </template>
 <script lang='ts'>
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
+import axios from 'axios'
+
 
 export default defineComponent({
   setup() {
     console.log('table')
+    const show = ref(true)
+    const afterPrint = () => {
+        console.log('shit')
+        show.value = true
+    }
+    const beforePrint = () => {
+        console.log('before')
+    }
+    if (window.matchMedia) {
+	   var mediaQueryList = window.matchMedia('print');
+	   mediaQueryList.addListener((mql) => {
+	       if (mql.matches) {
+	            beforePrint();
+	       } else {
+	            afterPrint();
+	       }
+	   });
+    }
+    const print = () => {
+        console.log('print')
+        show.value = false
+        setTimeout(() => {
+            window.print()
+        })
+    }
+    const downloadExcel = async () => {
+        const el = document.createElement('a')
+        el.download = decodeURI('值班交接表.xlsx')
+        el.style.display = 'none'
+        el.href = './table.xlsx'
+        document.body.appendChild(el)
+        el.click()
+        document.body.removeChild(el)
+    }
+    return {
+        print,
+        show,
+        downloadExcel
+    }
   }
 })
 </script>
