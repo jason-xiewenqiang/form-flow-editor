@@ -1,13 +1,28 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '../views/home/Home.vue'
+import Grid from '../views/grid/index.vue'
 import NProgress from 'nprogress'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    redirect: '/grid',
+    children: [
+      {
+        path: '/grid',
+        name: 'Grid',
+        component: Grid
+      },
+      {
+        path: '/table',
+        name: 'Table',
+        component: import(/* webpackChunkName: "table" */ '../views/table/Index.vue')
+      },
+    ]
   },
+  
   {
     path: '/login',
     name: 'Login',
@@ -23,9 +38,9 @@ const router = createRouter({
 router.beforeEach((from, to, next) => {
   NProgress.start()
   setTimeout(() => {
-    NProgress.done()
     next()
-  }, Math.random() * 1000)
+    NProgress.done()
+  }, Math.random() * 300)
 })
 
 export default router
