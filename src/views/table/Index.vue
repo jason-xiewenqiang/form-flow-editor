@@ -1,6 +1,6 @@
 <template>
   <div class="table">
-    <table border="1" cellspacing="0">
+    <table id="table-view" border="1" cellspacing="0">
         <tbody>
             <tr>
                 <td colspan="3" style="height: 60px;"></td>
@@ -127,12 +127,15 @@
         </tbody>
     </table>
     <el-button @click="print" v-show="show">打印</el-button>
-    <el-button @click="downloadExcel" v-show="show">下载</el-button>
+    <el-button @click="toCanvasPNG('png')" v-show="show">下载成PNG</el-button>
+    <el-button @click="toCanvasPNG('jpeg')" v-show="show">下载成JPG</el-button>
+    <el-button @click="downloadExcel" v-show="show">下载原文件</el-button>
   </div>
 </template>
 <script lang='ts'>
 import { defineComponent, ref } from 'vue'
 import axios from 'axios'
+import html2canvas from 'html2canvas'
 
 
 export default defineComponent({
@@ -172,10 +175,26 @@ export default defineComponent({
         el.click()
         document.body.removeChild(el)
     }
+    const downLoad = (url: string) =>{
+        const oA = document.createElement("a");
+        oA.download = '交接班';// 设置下载的文件名，默认是'下载'
+        oA.href = url;
+        document.body.appendChild(oA);
+        oA.click();
+        oA.remove(); // 下载之后把创建的元素删除
+    }
+    const toCanvasPNG = (type: string) => {
+        html2canvas(document.getElementById('table-view') as HTMLElement).then(function(canvas) {
+            const url = canvas.toDataURL(`image/${type}`);
+            downLoad(url)
+        });
+    }
+    
     return {
         print,
         show,
-        downloadExcel
+        downloadExcel,
+        toCanvasPNG
     }
   }
 })
