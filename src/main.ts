@@ -14,5 +14,5 @@ const app = createApp(App)
 
 app.use(store, key)
 app.use(router)
-app.use(ElementPlus, {locale: lang, size: 'small', zIndex: 3000 })
+app.use(ElementPlus, { locale: lang, size: 'small', zIndex: 3000 })
 app.mount('#app')
