@@ -1,5 +1,5 @@
 <template>
-  <div class="login"></div>
+  <div class="login">1</div>
 </template>
 <script lang='ts'>
 import { defineComponent } from 'vue'

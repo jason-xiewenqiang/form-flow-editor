@@ -1,7 +1,7 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import styleImport from 'vite-plugin-style-import'
-import path from 'path'
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import styleImport from 'vite-plugin-style-import';
+import path from 'path';
 
 export default defineConfig({
   plugins: [
@@ -17,7 +17,7 @@ export default defineConfig({
           },
           resolveComponent: (name) => {
             return `element-plus/lib/${name}`;
-          },
+          }
         }
       ]
     })
@@ -29,13 +29,14 @@ export default defineConfig({
    */
   base: './',
   /**
-  * 与“根”相关的目录，构建输出将放在其中。如果目录存在，它将在构建之前被删除。
-  * @default 'dist'
-  */
+   * 与“根”相关的目录，构建输出将放在其中。如果目录存在，它将在构建之前被删除。
+   * @default 'dist'
+   */
   // outDir: 'dist',
   server: {
     // hostname: '0.0.0.0',
-    host: "localhost",
+    host: 'localhost',
+    hmr: true,
     port: 8081,
     proxy: {
       '/api': {
@@ -43,8 +44,8 @@ export default defineConfig({
         changeOrigin: true,
         ws: true,
         rewrite: (pathStr) => pathStr.replace('/api', '')
-      },
-    },
+      }
+    }
   },
   resolve: {
     // 导入文件夹别名
@@ -53,12 +54,12 @@ export default defineConfig({
       views: path.resolve(__dirname, './src/views'),
       components: path.resolve(__dirname, './src/components'),
       utils: path.resolve(__dirname, './src/utils'),
-      less: path.resolve(__dirname, "./src/less"),
-      assets: path.resolve(__dirname, "./src/assets"),
-      store: path.resolve(__dirname, "./src/store"),
-    },
+      less: path.resolve(__dirname, './src/less'),
+      assets: path.resolve(__dirname, './src/assets'),
+      store: path.resolve(__dirname, './src/store')
+    }
   },
   optimizeDeps: {
-    include: ["element-plus/lib/locale/lang/zh-cn"],
+    include: ['element-plus/lib/locale/lang/zh-cn']
   }
-})
+});

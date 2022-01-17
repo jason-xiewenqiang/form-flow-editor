@@ -8,7 +8,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/',
     name: 'Home',
     component: Home,
-    redirect: '/grid',
+    redirect: '/form',
     children: [
       {
         path: '/grid',
